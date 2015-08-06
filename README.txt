@@ -7,6 +7,7 @@ Azfar -0192968478
 Aqil - 0193544987
 Ariff -0173800476
 
+Notice: For this week, Please pass to me your timetable and learn how to use Github and SourceTree. Ask me if you are lost. Thanks.
 
 Week 1(10th - 14th Aug):
 Interface(Azfar):Design Interface Layout
