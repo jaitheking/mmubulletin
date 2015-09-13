@@ -34,10 +34,7 @@ public class Topic extends JFrame {
 	
 
 
-	public static void main(String[] args){
-	Topic test = new Topic("Potato Theory","Description");
 
-
-	}		
+		
 }
 
