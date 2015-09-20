@@ -1,4 +1,5 @@
 
+import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import javax.swing.JFormattedTextField;
@@ -17,34 +18,45 @@ import javax.swing.event.*;
  */
 public class Comment_GUI extends javax.swing.JFrame {
     private final static String newline ="\n";
-    private String username;
-    /**
-     * Creates new form Topic
-     */
+    private String user_name;
+    private int title_id;
+    private String title_name;
+    private String title_desc;
+    private String subject_name;
+    private  Connection conn = null;
+    private  PreparedStatement pst = null;
+    private ResultSet rs = null;
+    
     public Comment_GUI() {
         initComponents();
-        username = String.valueOf(User.new_user.getUsername());
+        user_name = String.valueOf(User.new_user.getUsername());
+        username.setText(user_name);
+        subject_name = Subject.discuss_subject.getSubjTitle();
+        title_id = Title.title_chosen.gettitle_id();
+        title_name = Title.title_chosen.gettitle_name();
+        title_desc = Title.title_chosen.gettitle_desc();
+        DescriptionSection.setText(title_desc);
         CommentInput.getDocument().addDocumentListener(new DocumentListener() {
-  public void changedUpdate(DocumentEvent e) {
-    changed();
-  }
-  public void removeUpdate(DocumentEvent e) {
-    changed();
-  }
-  public void insertUpdate(DocumentEvent e) {
-    changed();
-  }
+                public void changedUpdate(DocumentEvent e) {
+                  changed();
+                }
+                public void removeUpdate(DocumentEvent e) {
+                  changed();
+                }
+                public void insertUpdate(DocumentEvent e) {
+                  changed();
+                }
 
-  public void changed() {
-     if (CommentInput.getText().equals("")){
-       PostButton.setEnabled(false);
-     }
-     else {
-       PostButton.setEnabled(true);
-    }
+                public void changed() {
+                   if (CommentInput.getText().equals("")){
+                     PostButton.setEnabled(false);
+                   }
+                   else {
+                     PostButton.setEnabled(true);
+                  }
 
-  }
-});
+                }
+        });
     }
 
     /**
@@ -62,7 +74,7 @@ public class Comment_GUI extends javax.swing.JFrame {
         home = new javax.swing.JButton();
         subject = new javax.swing.JButton();
         logout = new javax.swing.JButton();
-        label_username = new javax.swing.JLabel();
+        username = new javax.swing.JLabel();
         RightPanel = new javax.swing.JPanel();
         TopicName = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -73,6 +85,7 @@ public class Comment_GUI extends javax.swing.JFrame {
         CommentInput = new javax.swing.JTextField();
         PostButton = new javax.swing.JButton();
         EditButton = new javax.swing.JButton();
+        message_status = new javax.swing.JLabel();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -107,9 +120,9 @@ public class Comment_GUI extends javax.swing.JFrame {
             }
         });
 
-        label_username.setFont(new java.awt.Font("Droid Sans", 0, 24)); // NOI18N
-        label_username.setForeground(new java.awt.Color(255, 250, 250));
-        label_username.setText("<username>");
+        username.setFont(new java.awt.Font("Droid Sans", 0, 24)); // NOI18N
+        username.setForeground(new java.awt.Color(255, 250, 250));
+        username.setText("<username>");
 
         javax.swing.GroupLayout LeftPanelLayout = new javax.swing.GroupLayout(LeftPanel);
         LeftPanel.setLayout(LeftPanelLayout);
@@ -118,7 +131,7 @@ public class Comment_GUI extends javax.swing.JFrame {
             .addGroup(LeftPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(label_username, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(username, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LeftPanelLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -133,7 +146,7 @@ public class Comment_GUI extends javax.swing.JFrame {
             LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(LeftPanelLayout.createSequentialGroup()
                 .addGap(36, 36, 36)
-                .addComponent(label_username, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(home, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -203,6 +216,8 @@ public class Comment_GUI extends javax.swing.JFrame {
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(RightPanelLayout.createSequentialGroup()
                                 .addComponent(CommentTitle)
+                                .addGap(29, 29, 29)
+                                .addComponent(message_status)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(EditButton)))))
                 .addContainerGap())
@@ -217,7 +232,9 @@ public class Comment_GUI extends javax.swing.JFrame {
                 .addGroup(RightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(RightPanelLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(CommentTitle))
+                        .addGroup(RightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(CommentTitle)
+                            .addComponent(message_status)))
                     .addGroup(RightPanelLayout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addComponent(EditButton)))
@@ -249,12 +266,64 @@ public class Comment_GUI extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+     public void sendComment(String comment){
+         conn=DB_Controller.ConnectDB();
+        String Sql = "INSERT INTO title_comment (title_id, comment, user_name, timestamp) VALUES (?, ?, ?, NOW());";
+        
+        try{
+            pst=conn.prepareStatement(Sql);
+            
+            pst.setString(1,String.valueOf(title_id));
+            pst.setString(2,comment);
+            pst.setString(3,user_name);
+            rs = pst.executeQuery();
+            if(rs.next()){
+                    message_status.setText("Your comment has been posted.");
+            }
+            else{
+                message_status.setText("Your comment was not posted.");
+               }
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+     }
+    public void loadComments(){
+        conn=DB_Controller.ConnectDB();
+        String Sql = "SELECT comment,user_name,timestamp FROM title_comment,subject_title WHERE title_comment.title_id = subject_title.id AND subject_title.id = ?  ";
+        
+        try{
+            pst=conn.prepareStatement(Sql);
+            
+            pst.setString(1,String.valueOf(title_id));
+            rs = pst.executeQuery();
+            while(rs.next()){
+                    String text = rs.getString("comment");
+                    String poster = rs.getString("user_name");
+                    String timestamp = rs.getString("timestamp");
+                    CommentArea.append(text + newline);
+                    CommentArea.append(poster+" posted on " + timestamp + newline);
+                    CommentInput.selectAll();
+        
+                    CommentArea.setCaretPosition(CommentArea.getDocument().getLength());
+        
+                    CommentInput.requestFocusInWindow();
+               
+            }
+            if (CommentArea.getText() == null) {
+                CommentArea.setText("Be The First To Comment...");
+            } 
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    
+    }
+    
     private void PostButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PostButtonActionPerformed
         // TODO add your handling code here:
            String timeStamp = new SimpleDateFormat("HH:mm:ss yyyy:MM:dd").format(Calendar.getInstance().getTime());
         String text = CommentInput.getText();
-        
+        sendComment(text);
         CommentArea.append(text + newline);
         CommentArea.append(username+" posted on " + timeStamp + newline);
         CommentInput.selectAll();
@@ -262,6 +331,7 @@ public class Comment_GUI extends javax.swing.JFrame {
         CommentArea.setCaretPosition(CommentArea.getDocument().getLength());
         
         CommentInput.requestFocusInWindow();
+        
         CommentInput.setText("");
     }//GEN-LAST:event_PostButtonActionPerformed
 
@@ -269,7 +339,7 @@ public class Comment_GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         String timeStamp = new SimpleDateFormat("HH:mm:ss yyyy:MM:dd").format(Calendar.getInstance().getTime());
         String text = CommentInput.getText();
-        
+        sendComment(text);
         if(CommentInput.getText().length() > 0){
             PostButton.setEnabled(true);
         }
@@ -297,16 +367,14 @@ public class Comment_GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         Board_GUI mmu = new Board_GUI();
         mmu.setVisible(true);
-        mmu.username.setText(this.label_username.getText());
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_homeActionPerformed
 
     private void subjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subjectActionPerformed
         // TODO add your handling code here:
         Subject_GUI board_subject = new Subject_GUI();
         board_subject.setVisible(true);
-        board_subject.username.setText(this.label_username.getText());
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_subjectActionPerformed
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
@@ -314,7 +382,7 @@ public class Comment_GUI extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null,"Logging out... \nGoodbye "+username);
         Login_GUI logout = new Login_GUI();
         logout.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_logoutActionPerformed
 
     private void EditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditButtonActionPerformed
@@ -328,47 +396,7 @@ public class Comment_GUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_EditButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Comment_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Comment_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Comment_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Comment_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Comment_GUI().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea CommentArea;
@@ -385,8 +413,9 @@ public class Comment_GUI extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jTextArea1;
-    public javax.swing.JLabel label_username;
     private javax.swing.JButton logout;
+    private javax.swing.JLabel message_status;
     private javax.swing.JButton subject;
+    public javax.swing.JLabel username;
     // End of variables declaration//GEN-END:variables
 }

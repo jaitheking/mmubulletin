@@ -11,8 +11,11 @@
 public class Title {
     private String title_name;
     private String title_desc;
+    private int title_id;
+    public static Title title_chosen;
     
-    public Title(String name,String desc){
+    public Title(int id ,String name,String desc){
+        this.settitle_id(id);
         this.settitle_name(name);
         this.settitle_desc(desc);
     }
@@ -32,4 +35,14 @@ public class Title {
     public String gettitle_desc(){
         return title_desc;
     }
+    
+    public void settitle_id(int id){
+        title_id = id;
+    }
+    
+    public int gettitle_id(){
+        return title_id;
+    }
+    
+    
 }

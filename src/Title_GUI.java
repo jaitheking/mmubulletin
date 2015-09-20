@@ -1,13 +1,9 @@
 
 
-import java.awt.List;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
+import java.awt.*;
 import java.sql.*;
+import javax.swing.*;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -26,13 +22,19 @@ public class Title_GUI extends javax.swing.JFrame {
     DefaultListModel subjectlist = new DefaultListModel();
     private  Connection conn = null;
     private  PreparedStatement pst = null;
-    private ResultSet rs = null; 
+    private ResultSet rs = null;
+    private String user_name;
     private String subject_name;
+    private String  title_name;
+    private String title_desc;
+    private int title_id;
     /**
      * Creates new form OOAD
      */
     public Title_GUI() {
         initComponents();
+        user_name = String.valueOf(User.new_user.getUsername());
+        username.setText(user_name);
         subject_name = Subject.discuss_subject.getSubjTitle();
         viewTitle();
         titlelist.setModel(titlelist_model);
@@ -315,8 +317,8 @@ public class Title_GUI extends javax.swing.JFrame {
 
     private void submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
         
-        String title_name = topicName.getText();
-        String title_desc = topicDescription.getText();
+        title_name = topicName.getText();
+        title_desc = topicDescription.getText();
         addTitle(subject_name,title_name,title_desc);
         addTopicFrame.setVisible(false);
         
@@ -341,6 +343,9 @@ public class Title_GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         Comment_GUI comment_section = new Comment_GUI();
         comment_section.setVisible(true);
+        title_name = this.titlelist.getSelectedValue().toString();
+        fetchTitleID(title_name);
+        Title title_chosen = new Title(title_id,title_name,title_desc);
         this.dispose();
     }//GEN-LAST:event_selectActionPerformed
 
@@ -398,6 +403,27 @@ public class Title_GUI extends javax.swing.JFrame {
                 titlelist_model.addElement("No Topic has been created yet.");
                 select.setEnabled(false);
             } 
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+   
+   public void fetchTitleID(String title_name){
+        conn=DB_Controller.ConnectDB();
+        String Sql = "SELECT  id FROM subject_title WHERE subject_name = ? AND title_name = ? ";
+        
+        try{
+            pst=conn.prepareStatement(Sql);
+            
+            pst.setString(1,subject_name);
+            pst.setString(2,title_name);
+            rs = pst.executeQuery();
+            if(rs.next()){
+                   title_id = Integer.parseInt(rs.getString("id"));
+                    
+               
+            }
+             
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e);
         }
