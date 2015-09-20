@@ -312,18 +312,18 @@ public class Comment_GUI extends javax.swing.JFrame {
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null,"Logging out... \nGoodbye "+username);
-        User_GUI logout = new User_GUI();
+        Login_GUI logout = new Login_GUI();
         logout.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_logoutActionPerformed
 
     private void EditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditButtonActionPerformed
         // TODO add your handling code here:
-        if(User_GUI.Lecturer.isSelected()){
+        if(Login_GUI.Lecturer.isSelected()){
               DescriptionSection.setEditable(true);
         }
         
-        if(User_GUI.Student.isSelected()){
+        if(Login_GUI.Student.isSelected()){
               EditButton.setEnabled(false);
         }
     }//GEN-LAST:event_EditButtonActionPerformed

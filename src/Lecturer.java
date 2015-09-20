@@ -1,4 +1,4 @@
-public class Lecturer extends User_GUI{
+public class Lecturer extends Login_GUI{
 
 	private int lec_id;
 

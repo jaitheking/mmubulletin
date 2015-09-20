@@ -18,7 +18,7 @@ public class Subject_GUI extends javax.swing.JFrame {
     private  Connection conn = null;
     private  PreparedStatement pst = null;
     private ResultSet rs = null;
-    public String username_db;
+    public String user_name;
     /**
      * Creates new form Title_GUI
      */
@@ -26,7 +26,8 @@ public class Subject_GUI extends javax.swing.JFrame {
         initComponents();
        
         viewSubject();
-        
+        user_name = String.valueOf(User.new_user.getUsername());
+        username.setText(user_name);
         subjectlist.setModel(subjectlist_model);
         
     }
@@ -194,7 +195,7 @@ public class Subject_GUI extends javax.swing.JFrame {
         try{
             pst=conn.prepareStatement(Sql);
             
-            pst.setString(1,username_db);
+            pst.setString(1,user_name);
             rs = pst.executeQuery();
             while(rs.next()){
                     String subjectlist2 = rs.getString("subject_name");
@@ -222,7 +223,7 @@ public class Subject_GUI extends javax.swing.JFrame {
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null,"Logging out... \nGoodbye "+username.getText());
-        User_GUI logout = new User_GUI();
+        Login_GUI logout = new Login_GUI();
         logout.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_logoutActionPerformed
@@ -241,47 +242,7 @@ public class Subject_GUI extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_selectActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Subject_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Subject_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Subject_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Subject_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Subject_GUI().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton home;

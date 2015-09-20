@@ -1,4 +1,4 @@
-public class Student extends User_GUI{
+public class Student extends Login_GUI{
 
 	private int stu_id;
 

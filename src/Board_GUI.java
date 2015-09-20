@@ -9,17 +9,21 @@ import javax.swing.*;
  * @author azfaralsukor
  */
 public class Board_GUI extends javax.swing.JFrame {
-    
-     
+    private String user_status;
+    private String user_name; 
     
     /**
      * Creates new form MMU_Bulletin
      */
     public Board_GUI() {
         initComponents();
-        
-        
-        
+        user_name = String.valueOf(User.new_user.getUsername());
+        username.setText(user_name);
+        user_status = User.new_user.getType();
+        if (user_status != "Lecturer"){
+            AddButton.setVisible(false);
+            report.setVisible(false);
+        }
     }
     
     /**
@@ -30,12 +34,14 @@ public class Board_GUI extends javax.swing.JFrame {
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         LeftPanel = new javax.swing.JPanel();
         logout = new javax.swing.JButton();
         subject = new javax.swing.JButton();
         AddButton = new javax.swing.JButton();
         username = new javax.swing.JLabel();
+        report = new javax.swing.JButton();
         rightPanel = new javax.swing.JPanel();
         bbcm = new javax.swing.JLabel();
         homepage = new javax.swing.JLabel();
@@ -47,6 +53,7 @@ public class Board_GUI extends javax.swing.JFrame {
 
         LeftPanel.setBackground(new java.awt.Color(0, 51, 204));
         LeftPanel.setPreferredSize(new java.awt.Dimension(150, 600));
+        LeftPanel.setLayout(new java.awt.GridBagLayout());
 
         logout.setText("Log Out");
         logout.addActionListener(new java.awt.event.ActionListener() {
@@ -54,6 +61,14 @@ public class Board_GUI extends javax.swing.JFrame {
                 logoutActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 74;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(284, 12, 12, 0);
+        LeftPanel.add(logout, gridBagConstraints);
 
         subject.setText("Subjects");
         subject.addActionListener(new java.awt.event.ActionListener() {
@@ -61,6 +76,13 @@ public class Board_GUI extends javax.swing.JFrame {
                 subjectActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipady = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(72, 36, 0, 0);
+        LeftPanel.add(subject, gridBagConstraints);
 
         AddButton.setText("Add new user");
         AddButton.addActionListener(new java.awt.event.ActionListener() {
@@ -68,45 +90,32 @@ public class Board_GUI extends javax.swing.JFrame {
                 AddButtonActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 26, 0, 0);
+        LeftPanel.add(AddButton, gridBagConstraints);
 
         username.setFont(new java.awt.Font("Droid Sans", 0, 24)); // NOI18N
         username.setForeground(new java.awt.Color(255, 250, 250));
         username.setText("<username>");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipady = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(32, 12, 0, 2);
+        LeftPanel.add(username, gridBagConstraints);
 
-        javax.swing.GroupLayout LeftPanelLayout = new javax.swing.GroupLayout(LeftPanel);
-        LeftPanel.setLayout(LeftPanelLayout);
-        LeftPanelLayout.setHorizontalGroup(
-            LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LeftPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(username, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, LeftPanelLayout.createSequentialGroup()
-                        .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(LeftPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(AddButton)
-                            .addGroup(LeftPanelLayout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(subject)))
-                        .addGap(27, 27, 27)))
-                .addGap(78, 78, 78))
-        );
-        LeftPanelLayout.setVerticalGroup(
-            LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LeftPanelLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(66, 66, 66)
-                .addComponent(subject, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(AddButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 352, Short.MAX_VALUE)
-                .addComponent(logout)
-                .addContainerGap())
-        );
+        report.setText("Analysis Report");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(35, 17, 0, 0);
+        LeftPanel.add(report, gridBagConstraints);
 
         rightPanel.setBackground(new java.awt.Color(254, 254, 254));
         rightPanel.setPreferredSize(new java.awt.Dimension(650, 600));
@@ -165,19 +174,16 @@ public class Board_GUI extends javax.swing.JFrame {
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null,"Logging out... \nGoodbye "+username.getText());
-        User_GUI logout = new User_GUI();
+        Login_GUI logout = new Login_GUI();
         logout.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_logoutActionPerformed
 
     private void subjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subjectActionPerformed
         // TODO add your handling code here:
         Subject_GUI board_subject = new Subject_GUI();
         board_subject.setVisible(true);
-        board_subject.username.setText(this.username.getText());
-        board_subject.username_db = this.username.getText();
-        
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_subjectActionPerformed
 
     private void AddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddButtonActionPerformed
@@ -197,6 +203,7 @@ public class Board_GUI extends javax.swing.JFrame {
     private javax.swing.JLabel bbcm;
     private javax.swing.JLabel homepage;
     private javax.swing.JButton logout;
+    private javax.swing.JButton report;
     private javax.swing.JPanel rightPanel;
     private javax.swing.JButton subject;
     public javax.swing.JLabel username;

@@ -11,7 +11,7 @@ import javax.swing.*;
  *
  * @author Asus
  */
-public class User_GUI extends javax.swing.JFrame {
+public class Login_GUI extends javax.swing.JFrame {
     private String user_pass;
     private String user_type;
     private Connection conn = null;
@@ -20,7 +20,7 @@ public class User_GUI extends javax.swing.JFrame {
     private String checker = null;
    
     
-    public User_GUI() {
+    public Login_GUI() {
         initComponents();
         //user_pass = password;
         //user_type = role;
@@ -176,16 +176,7 @@ public class User_GUI extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Login Successful\nWelcome "+txtusername.getText()+"!");
                 Board_GUI mmu = new Board_GUI();
                 mmu.setVisible(true);
-                mmu.username.setText(txtusername.getText());
-                if( Lecturer.isSelected()){
-                
-                mmu.AddButton.setVisible(true);
-                }
-                
-                if( Student.isSelected()){
-                
-                mmu.AddButton.setVisible(false);
-                }
+                User new_user = new User(Integer.parseInt(txtusername.getText()),checker);
                 this.setVisible(false);
             }
             else {
@@ -214,43 +205,7 @@ public class User_GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_StudentItemStateChanged
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(User_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(User_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(User_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(User_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new User_GUI().setVisible(true);
-            }
-        });
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JRadioButton Lecturer;
