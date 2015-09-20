@@ -362,7 +362,7 @@ public class Comment_GUI extends javax.swing.JFrame {
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null,"Logging out... \nGoodbye "+username);
+        JOptionPane.showMessageDialog(null,"Logging out... \nGoodbye "+user_name);
         Login_GUI logout = new Login_GUI();
         logout.setVisible(true);
         this.dispose();
