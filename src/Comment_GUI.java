@@ -17,13 +17,13 @@ import javax.swing.event.*;
  */
 public class Comment_GUI extends javax.swing.JFrame {
     private final static String newline ="\n";
-    public String username;
+    private String username;
     /**
      * Creates new form Topic
      */
     public Comment_GUI() {
         initComponents();
-        
+        username = String.valueOf(User.new_user.getUsername());
         CommentInput.getDocument().addDocumentListener(new DocumentListener() {
   public void changedUpdate(DocumentEvent e) {
     changed();

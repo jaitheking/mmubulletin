@@ -18,7 +18,7 @@ public class Subject_GUI extends javax.swing.JFrame {
     private  Connection conn = null;
     private  PreparedStatement pst = null;
     private ResultSet rs = null;
-    public String user_name;
+    private String user_name;
     /**
      * Creates new form Title_GUI
      */
@@ -216,16 +216,15 @@ public class Subject_GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         Board_GUI mmu = new Board_GUI();
         mmu.setVisible(true);
-        mmu.username.setText(this.username.getText());
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_homeActionPerformed
 
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(null,"Logging out... \nGoodbye "+username.getText());
+        JOptionPane.showMessageDialog(null,"Logging out... \nGoodbye "+user_name);
         Login_GUI logout = new Login_GUI();
         logout.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_logoutActionPerformed
 
     private void subjectlistValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_subjectlistValueChanged
@@ -235,10 +234,9 @@ public class Subject_GUI extends javax.swing.JFrame {
 
     private void selectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectActionPerformed
         // TODO add your handling code here:
-        Title_GUI subject_board = new Title_GUI();
-        subject_board.setVisible(true);
-        subject_board.username.setText(this.username.getText());
-        subject_board.topictitle.setText(this.subjectlist.getSelectedValue().toString());
+        Title_GUI title_board = new Title_GUI();
+        title_board.setVisible(true);
+        Subject discuss_subject = new Subject(this.subjectlist.getSelectedValue().toString());  
         this.setVisible(false);
     }//GEN-LAST:event_selectActionPerformed
 

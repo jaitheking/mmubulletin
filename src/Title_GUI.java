@@ -21,22 +21,22 @@ import java.sql.*;
 
 
 public class Title_GUI extends javax.swing.JFrame {
-    DefaultListModel listoftopics = new DefaultListModel();
-    DefaultListModel desclist = new DefaultListModel();
+    DefaultListModel titlelist_model = new DefaultListModel();
+    DefaultListModel titledesclist_model = new DefaultListModel();
     DefaultListModel subjectlist = new DefaultListModel();
     private  Connection conn = null;
     private  PreparedStatement pst = null;
     private ResultSet rs = null; 
+    private String subject_name;
     /**
      * Creates new form OOAD
      */
     public Title_GUI() {
         initComponents();
-        listoftopics.addElement("Class Announcement");
-        listoftopics.addElement("Assignment Deadline");
-        topicList.setModel(listoftopics);
-        desclist.addElement("No classes for the whole semester.");
-        desclist.addElement("Assignment Deadline is tomorrow.");
+        subject_name = Subject.discuss_subject.getSubjTitle();
+        viewTitle();
+        titlelist.setModel(titlelist_model);
+        
     }
 
     /**
@@ -47,6 +47,7 @@ public class Title_GUI extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         addTopicFrame = new javax.swing.JFrame();
         topicName = new javax.swing.JTextField();
@@ -62,7 +63,7 @@ public class Title_GUI extends javax.swing.JFrame {
         addTopic = new javax.swing.JButton();
         select = new javax.swing.JButton();
         listScroll = new javax.swing.JScrollPane();
-        topicList = new javax.swing.JList();
+        titlelist = new javax.swing.JList();
         jList1 = new javax.swing.JList();
         LeftPanel = new javax.swing.JPanel();
         logout = new javax.swing.JButton();
@@ -162,12 +163,12 @@ public class Title_GUI extends javax.swing.JFrame {
             }
         });
 
-        topicList.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+        titlelist.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                topicListValueChanged(evt);
+                titlelistValueChanged(evt);
             }
         });
-        listScroll.setViewportView(topicList);
+        listScroll.setViewportView(titlelist);
 
         javax.swing.GroupLayout topicPanelLayout = new javax.swing.GroupLayout(topicPanel);
         topicPanel.setLayout(topicPanelLayout);
@@ -203,7 +204,7 @@ public class Title_GUI extends javax.swing.JFrame {
                     .addComponent(listTopics)
                     .addComponent(addTopic))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(listScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
+                .addComponent(listScroll)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(select)
                 .addContainerGap())
@@ -216,6 +217,7 @@ public class Title_GUI extends javax.swing.JFrame {
 
         LeftPanel.setBackground(new java.awt.Color(0, 51, 204));
         LeftPanel.setPreferredSize(new java.awt.Dimension(150, 600));
+        LeftPanel.setLayout(new java.awt.GridBagLayout());
 
         logout.setText("Log Out");
         logout.addActionListener(new java.awt.event.ActionListener() {
@@ -223,6 +225,14 @@ public class Title_GUI extends javax.swing.JFrame {
                 logoutActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipadx = 72;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(391, 12, 12, 0);
+        LeftPanel.add(logout, gridBagConstraints);
 
         subject.setText("Subjects");
         subject.addActionListener(new java.awt.event.ActionListener() {
@@ -230,6 +240,14 @@ public class Title_GUI extends javax.swing.JFrame {
                 subjectActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.ipady = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 79, 0, 0);
+        LeftPanel.add(subject, gridBagConstraints);
 
         home.setText("Home");
         home.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -238,41 +256,26 @@ public class Title_GUI extends javax.swing.JFrame {
                 homeActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipadx = 19;
+        gridBagConstraints.ipady = 13;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 79, 0, 0);
+        LeftPanel.add(home, gridBagConstraints);
 
         username.setFont(new java.awt.Font("Droid Sans", 0, 24)); // NOI18N
         username.setForeground(new java.awt.Color(255, 250, 250));
         username.setText("<username>");
-
-        javax.swing.GroupLayout LeftPanelLayout = new javax.swing.GroupLayout(LeftPanel);
-        LeftPanel.setLayout(LeftPanelLayout);
-        LeftPanelLayout.setHorizontalGroup(
-            LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(LeftPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(LeftPanelLayout.createSequentialGroup()
-                        .addGap(0, 2, Short.MAX_VALUE)
-                        .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(subject)
-                            .addComponent(home, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(username)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LeftPanelLayout.createSequentialGroup()
-                        .addComponent(logout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
-        );
-        LeftPanelLayout.setVerticalGroup(
-            LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LeftPanelLayout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(home, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(subject, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(logout)
-                .addContainerGap())
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipady = 6;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(38, 14, 0, 0);
+        LeftPanel.add(username, gridBagConstraints);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -311,11 +314,11 @@ public class Title_GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_addTopicActionPerformed
 
     private void submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
-        listoftopics.addElement(topicName.getText());
-        topicList.setModel(listoftopics);
-        desclist.addElement(topicDescription.getText());
-        addTopicFrame.setVisible(false);
         
+        String title_name = topicName.getText();
+        String title_desc = topicDescription.getText();
+        addTitle(subject_name,title_name,title_desc);
+        addTopicFrame.setVisible(false);
         
     }//GEN-LAST:event_submitActionPerformed
 
@@ -324,84 +327,80 @@ public class Title_GUI extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null,"Logging out... \nGoodbye "+username.getText());
         Login_GUI logout = new Login_GUI();
         logout.setVisible(true);
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_logoutActionPerformed
 
     private void subjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subjectActionPerformed
         // TODO add your handling code here:
         Subject_GUI board_subject = new Subject_GUI();
         board_subject.setVisible(true);
-        board_subject.username.setText(this.username.getText());
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_subjectActionPerformed
+
+    private void selectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectActionPerformed
+        // TODO add your handling code here:
+        Comment_GUI comment_section = new Comment_GUI();
+        comment_section.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_selectActionPerformed
+
+    private void titlelistValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_titlelistValueChanged
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_titlelistValueChanged
 
     private void homeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeActionPerformed
         // TODO add your handling code here:
         Board_GUI mmu = new Board_GUI();
         mmu.setVisible(true);
-        mmu.username.setText(this.username.getText());
         this.setVisible(false);
     }//GEN-LAST:event_homeActionPerformed
-
-    private void selectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectActionPerformed
-        // TODO add your handling code here:
-        Comment_GUI newTopic = new Comment_GUI();
-        newTopic.setVisible(true);
-        String title = topicList.getSelectedValue().toString();
-        newTopic.setTitle(title);
-        newTopic.TopicName.setText(title);
-        int pos = topicList.getSelectedIndex();
-        String desc = desclist.getElementAt(pos).toString();
-        newTopic.DescriptionSection.setText(desc);
-        newTopic.username = this.username.getText();
-        this.setVisible(false);
-    }//GEN-LAST:event_selectActionPerformed
-
-    private void topicListValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_topicListValueChanged
-        // TODO add your handling code here:
+    
+   private void addTitle(String subject_name,String title_name, String title_desc){
+       conn=DB_Controller.ConnectDB();
+        String Sql = "INSERT INTO subject_title(subject_name, title_name, title_desc) VALUES (?,?,?)";
         
-    }//GEN-LAST:event_topicListValueChanged
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+        try{
+            pst=conn.prepareStatement(Sql);
+            
+            pst.setString(1,subject_name);
+            pst.setString(2,title_name);
+            pst.setString(3,title_desc);
+            rs = pst.executeQuery();
+            if(rs.next()){
+                    JOptionPane.showMessageDialog(null,"Topic added successful.");
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Title_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Title_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Title_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Title_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            else{JOptionPane.showMessageDialog(null,"Unsuccessful","Please Try Again",JOptionPane.ERROR_MESSAGE);}
         }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Title_GUI().setVisible(true);
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    
+    
+    
+   private void viewTitle(){
+        conn=DB_Controller.ConnectDB();
+        String Sql = "SELECT title_name FROM subject_title WHERE subject_name = ?";
+        
+        try{
+            pst=conn.prepareStatement(Sql);
+            
+            pst.setString(1,subject_name);
+            rs = pst.executeQuery();
+            while(rs.next()){
+                    String subjectlist2 = rs.getString("title_name");
+                    titlelist_model.addElement(subjectlist2);
+                    
+               
             }
-        });
+            if (titlelist_model.getSize() < 1) {
+                titlelist_model.addElement("No Topic has been created yet.");
+                select.setEnabled(false);
+            } 
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -419,8 +418,8 @@ public class Title_GUI extends javax.swing.JFrame {
     private javax.swing.JButton select;
     private javax.swing.JButton subject;
     private javax.swing.JButton submit;
+    private javax.swing.JList titlelist;
     private javax.swing.JTextArea topicDescription;
-    private javax.swing.JList topicList;
     private javax.swing.JTextField topicName;
     private javax.swing.JPanel topicPanel;
     private javax.swing.JLabel topicTitle;
