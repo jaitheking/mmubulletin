@@ -98,7 +98,7 @@ public class Board_GUI extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(18, 26, 0, 0);
         LeftPanel.add(AddButton, gridBagConstraints);
 
-        username.setFont(new java.awt.Font("Droid Sans", 0, 14)); // NOI18N
+        username.setFont(new java.awt.Font("Droid Sans", 0, 24)); // NOI18N
         username.setForeground(new java.awt.Color(255, 250, 250));
         username.setText("<username>");
         gridBagConstraints = new java.awt.GridBagConstraints();
