@@ -26,7 +26,7 @@ public class Subject_GUI extends javax.swing.JFrame {
         initComponents();
        
         viewSubject();
-        user_name = String.valueOf(User.new_user.getUsername());
+        user_name = String.valueOf(User.new_user.getUser_id());
         username.setText(user_name);
         subjectlist.setModel(subjectlist_model);
         

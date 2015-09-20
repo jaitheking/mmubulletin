@@ -10,15 +10,17 @@ import javax.swing.*;
  */
 public class Board_GUI extends javax.swing.JFrame {
     private String user_status;
-    private String user_name; 
+    private int user_name; 
     
     /**
      * Creates new form MMU_Bulletin
      */
     public Board_GUI() {
         initComponents();
-        user_name = String.valueOf(User.new_user.getUsername());
-        username.setText(user_name);
+        user_name = User.new_user.getUser_id();
+        username.setText(String.valueOf(user_name));
+        //username.setText(User.new_user.getType());
+        
         user_status = User.new_user.getType();
         if (user_status != "Lecturer"){
             AddButton.setVisible(false);
@@ -64,7 +66,6 @@ public class Board_GUI extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
-        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.ipadx = 74;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(284, 12, 12, 0);
@@ -97,13 +98,12 @@ public class Board_GUI extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(18, 26, 0, 0);
         LeftPanel.add(AddButton, gridBagConstraints);
 
-        username.setFont(new java.awt.Font("Droid Sans", 0, 24)); // NOI18N
+        username.setFont(new java.awt.Font("Droid Sans", 0, 14)); // NOI18N
         username.setForeground(new java.awt.Color(255, 250, 250));
         username.setText("<username>");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.ipady = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(32, 12, 0, 2);
@@ -157,7 +157,7 @@ public class Board_GUI extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(LeftPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(LeftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(rightPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE))
         );

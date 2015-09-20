@@ -24,7 +24,7 @@ public class Title_GUI extends javax.swing.JFrame {
     private  PreparedStatement pst = null;
     private ResultSet rs = null;
     private String user_name;
-    private String subject_name;
+    private String subject_name_title;
     private String  title_name;
     private String title_desc;
     private int title_id;
@@ -33,9 +33,9 @@ public class Title_GUI extends javax.swing.JFrame {
      */
     public Title_GUI() {
         initComponents();
-        user_name = String.valueOf(User.new_user.getUsername());
+        user_name = String.valueOf(User.new_user.getUser_id());
         username.setText(user_name);
-        subject_name = Subject.discuss_subject.getSubjTitle();
+        subject_name_title = Subject.discuss_subject.getSubjTitle();
         viewTitle();
         titlelist.setModel(titlelist_model);
         
@@ -319,7 +319,7 @@ public class Title_GUI extends javax.swing.JFrame {
         
         title_name = topicName.getText();
         title_desc = topicDescription.getText();
-        addTitle(subject_name,title_name,title_desc);
+        addTitle(subject_name_title,title_name,title_desc);
         addTopicFrame.setVisible(false);
         
     }//GEN-LAST:event_submitActionPerformed
@@ -391,7 +391,7 @@ public class Title_GUI extends javax.swing.JFrame {
         try{
             pst=conn.prepareStatement(Sql);
             
-            pst.setString(1,subject_name);
+            pst.setString(1,subject_name_title);
             rs = pst.executeQuery();
             while(rs.next()){
                     String subjectlist2 = rs.getString("title_name");
@@ -415,7 +415,7 @@ public class Title_GUI extends javax.swing.JFrame {
         try{
             pst=conn.prepareStatement(Sql);
             
-            pst.setString(1,subject_name);
+            pst.setString(1,subject_name_title);
             pst.setString(2,title_name);
             rs = pst.executeQuery();
             if(rs.next()){

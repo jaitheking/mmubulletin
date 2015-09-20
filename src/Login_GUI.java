@@ -1,3 +1,4 @@
+import java.awt.HeadlessException;
 import java.sql.*;
 import javax.swing.*;
 
@@ -18,7 +19,7 @@ public class Login_GUI extends javax.swing.JFrame {
     private PreparedStatement pst = null;
     private ResultSet rs = null;
     private String checker = null;
-   
+    private int user_id;
     
     public Login_GUI() {
         initComponents();
@@ -172,18 +173,19 @@ public class Login_GUI extends javax.swing.JFrame {
             pst.setString(3,checker);
             rs = pst.executeQuery();
             if(rs.next()){
-
-                JOptionPane.showMessageDialog(null,"Login Successful\nWelcome "+txtusername.getText()+"!");
+                 user_id = rs.getInt("user_id");
+                User.new_user = new User(user_id,checker);
+                JOptionPane.showMessageDialog(null,"Login Successful\nWelcome "+user_id+"!");
                 Board_GUI mmu = new Board_GUI();
                 mmu.setVisible(true);
-                User new_user = new User(Integer.parseInt(txtusername.getText()),checker);
-                this.setVisible(false);
+                
+                this.dispose();
             }
             else {
                 JOptionPane.showMessageDialog(null,"Invalid username or password / Incomplete Data","Access Denied",JOptionPane.ERROR_MESSAGE);
             }
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, e);
+        }catch(SQLException | NumberFormatException | HeadlessException e){
+            JOptionPane.showMessageDialog(null,e);
         }
         
         

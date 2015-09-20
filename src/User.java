@@ -14,17 +14,17 @@ public class User {
             private String user_type;
             public static User new_user;
             
-            public User(int userid,String user_type){
-                this.setUsername(user_id);
+            public User(int user_id,String user_type){
+                this.setUser_id(user_id);
                 this.setType(user_type);
             }
             
             
-            public void setUsername(int user_id){
+            public void setUser_id(int user_id){
                 this.user_id = user_id;
             }
             
-            public int getUsername(){
+            public int getUser_id(){
                 return user_id;
             }
             
