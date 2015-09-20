@@ -1,11 +1,12 @@
 
-import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import sun.util.calendar.BaseCalendar.Date;
 import javax.swing.event.*;
+import java.awt.*;
+import java.sql.*;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -19,10 +20,10 @@ import javax.swing.event.*;
 public class Comment_GUI extends javax.swing.JFrame {
     private final static String newline ="\n";
     private String user_name;
-    private int title_id;
-    private String title_name;
-    private String title_desc;
-    private String subject_name;
+    private int comment_title_id;
+    private String comment_title_name;
+    private String comment_title_desc;
+    private String subject_name1;
     private  Connection conn = null;
     private  PreparedStatement pst = null;
     private ResultSet rs = null;
@@ -31,11 +32,12 @@ public class Comment_GUI extends javax.swing.JFrame {
         initComponents();
         user_name = String.valueOf(User.new_user.getUser_id());
         username.setText(user_name);
-        subject_name = Subject.discuss_subject.getSubjTitle();
-        title_id = Title.title_chosen.getTitle_id();
-        title_name = Title.title_chosen.getTitle_name();
-        title_desc = Title.title_chosen.getTitle_desc();
-        DescriptionSection.setText(title_desc);
+        subject_name1 = Subject.discuss_subject.getSubjTitle();
+        comment_title_id = Title.title_chosen.getTitle_id();
+        comment_title_name = Title.title_chosen.getTitle_name();
+        comment_title_desc = Title.title_chosen.getTitle_desc();
+        DescriptionSection.setText(comment_title_desc);
+        loadComments();
         CommentInput.getDocument().addDocumentListener(new DocumentListener() {
                 public void changedUpdate(DocumentEvent e) {
                   changed();
@@ -84,7 +86,6 @@ public class Comment_GUI extends javax.swing.JFrame {
         CommentTitle = new javax.swing.JLabel();
         CommentInput = new javax.swing.JTextField();
         PostButton = new javax.swing.JButton();
-        EditButton = new javax.swing.JButton();
         message_status = new javax.swing.JLabel();
 
         jTextArea1.setColumns(20);
@@ -189,13 +190,6 @@ public class Comment_GUI extends javax.swing.JFrame {
             }
         });
 
-        EditButton.setText("Edit Content");
-        EditButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EditButtonActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout RightPanelLayout = new javax.swing.GroupLayout(RightPanel);
         RightPanel.setLayout(RightPanelLayout);
         RightPanelLayout.setHorizontalGroup(
@@ -211,15 +205,12 @@ public class Comment_GUI extends javax.swing.JFrame {
                     .addGroup(RightPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(RightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(RightPanelLayout.createSequentialGroup()
-                                .addComponent(TopicName)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(TopicName)
                             .addGroup(RightPanelLayout.createSequentialGroup()
                                 .addComponent(CommentTitle)
                                 .addGap(29, 29, 29)
-                                .addComponent(message_status)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(EditButton)))))
+                                .addComponent(message_status)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         RightPanelLayout.setVerticalGroup(
@@ -229,15 +220,10 @@ public class Comment_GUI extends javax.swing.JFrame {
                 .addComponent(TopicName)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
-                .addGroup(RightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(RightPanelLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(RightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(CommentTitle)
-                            .addComponent(message_status)))
-                    .addGroup(RightPanelLayout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(EditButton)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(RightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CommentTitle)
+                    .addComponent(message_status))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -273,20 +259,17 @@ public class Comment_GUI extends javax.swing.JFrame {
         try{
             pst=conn.prepareStatement(Sql);
             
-            pst.setString(1,String.valueOf(title_id));
+            pst.setString(1,String.valueOf(comment_title_id));
             pst.setString(2,comment);
             pst.setString(3,user_name);
-            rs = pst.executeQuery();
-            if(rs.next()){
-                    message_status.setText("Your comment has been posted.");
-            }
-            else{
-                message_status.setText("Your comment was not posted.");
-               }
+            pst.executeUpdate();
+            
         }
         catch(Exception e){
+            this.message_status.setText("Your comment was not posted.");
             JOptionPane.showMessageDialog(null, e);
         }
+        this.message_status.setText("Your comment was posted.");
      }
     public void loadComments(){
         conn=DB_Controller.ConnectDB();
@@ -295,7 +278,7 @@ public class Comment_GUI extends javax.swing.JFrame {
         try{
             pst=conn.prepareStatement(Sql);
             
-            pst.setString(1,String.valueOf(title_id));
+            pst.setString(1,String.valueOf(comment_title_id));
             rs = pst.executeQuery();
             while(rs.next()){
                     String text = rs.getString("comment");
@@ -325,7 +308,7 @@ public class Comment_GUI extends javax.swing.JFrame {
         String text = CommentInput.getText();
         sendComment(text);
         CommentArea.append(text + newline);
-        CommentArea.append(username+" posted on " + timeStamp + newline);
+        CommentArea.append(user_name+" posted on " + timeStamp + newline);
         CommentInput.selectAll();
         
         CommentArea.setCaretPosition(CommentArea.getDocument().getLength());
@@ -345,7 +328,7 @@ public class Comment_GUI extends javax.swing.JFrame {
         }
         
         CommentArea.append(text + newline);
-        CommentArea.append(username+" posted on " + timeStamp + newline);
+        CommentArea.append(user_name+" posted on " + timeStamp + newline);
         CommentInput.selectAll();
         
         
@@ -385,17 +368,6 @@ public class Comment_GUI extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_logoutActionPerformed
 
-    private void EditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditButtonActionPerformed
-        // TODO add your handling code here:
-        if(Login_GUI.Lecturer.isSelected()){
-              DescriptionSection.setEditable(true);
-        }
-        
-        if(Login_GUI.Student.isSelected()){
-              EditButton.setEnabled(false);
-        }
-    }//GEN-LAST:event_EditButtonActionPerformed
-
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -403,7 +375,6 @@ public class Comment_GUI extends javax.swing.JFrame {
     private javax.swing.JTextField CommentInput;
     private javax.swing.JLabel CommentTitle;
     public javax.swing.JTextArea DescriptionSection;
-    private javax.swing.JButton EditButton;
     private javax.swing.JPanel LeftPanel;
     private javax.swing.JButton PostButton;
     private javax.swing.JPanel RightPanel;

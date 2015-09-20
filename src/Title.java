@@ -14,30 +14,30 @@ public class Title {
     private int title_id;
     public static Title title_chosen;
     
-    public Title(int id ,String name,String desc){
-        this.setTitle_id(id);
-        this.setTitle_name(name);
-        this.setTitle_desc(desc);
+    public Title(int title_id,String title_name,String title_desc){
+        this.setTitle_id(title_id);
+        this.setTitle_name(title_name);
+        this.setTitle_desc(title_desc);
     }
     
-    public void setTitle_name(String name){
-        this.title_name = name;
+    public void setTitle_name(String title_name){
+        this.title_name = title_name;
     }
     
     public String getTitle_name(){
         return title_name;
     }
     
-    public void setTitle_desc(String desc){
-        this.title_desc = desc;
+    public void setTitle_desc(String title_desc){
+        this.title_desc = title_desc;
     }
     
     public String getTitle_desc(){
         return title_desc;
     }
     
-    public void setTitle_id(int id){
-        this.title_id = id;
+    public void setTitle_id(int title_id){
+        this.title_id = title_id;
     }
     
     public int getTitle_id(){

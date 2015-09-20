@@ -145,6 +145,7 @@ public class Title_GUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         topicPanel.setPreferredSize(new java.awt.Dimension(650, 600));
 
@@ -191,50 +192,48 @@ public class Title_GUI extends javax.swing.JFrame {
                     .addGroup(topicPanelLayout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addComponent(topictitle)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(Refresh))
-                    .addGroup(topicPanelLayout.createSequentialGroup()
-                        .addContainerGap(39, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, topicPanelLayout.createSequentialGroup()
+                        .addContainerGap(64, Short.MAX_VALUE)
                         .addGroup(topicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(topicPanelLayout.createSequentialGroup()
                                 .addComponent(listTopics)
-                                .addGap(137, 137, 137)
+                                .addGap(78, 78, 78)
+                                .addComponent(Refresh)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(addTopic))
-                            .addComponent(select, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
-                            .addComponent(listScroll))))
-                .addContainerGap(40, Short.MAX_VALUE))
+                            .addComponent(select, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(listScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE))))
+                .addContainerGap(61, Short.MAX_VALUE))
             .addGroup(topicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(topicPanelLayout.createSequentialGroup()
-                    .addGap(0, 203, Short.MAX_VALUE)
+                    .addGap(0, 226, Short.MAX_VALUE)
                     .addComponent(jList1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 203, Short.MAX_VALUE)))
+                    .addGap(0, 226, Short.MAX_VALUE)))
         );
         topicPanelLayout.setVerticalGroup(
             topicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topicPanelLayout.createSequentialGroup()
-                .addGroup(topicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(topicPanelLayout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addComponent(topictitle)
-                        .addGap(18, 18, 18))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topicPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(Refresh)
-                        .addGap(5, 5, 5)))
+                .addGap(41, 41, 41)
+                .addComponent(topictitle)
+                .addGap(18, 18, 18)
                 .addGroup(topicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(listTopics)
-                    .addComponent(addTopic))
+                    .addComponent(addTopic)
+                    .addComponent(Refresh))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(listScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
+                .addComponent(listScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(select)
                 .addContainerGap())
             .addGroup(topicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(topicPanelLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addGap(0, 223, Short.MAX_VALUE)
                     .addComponent(jList1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addGap(0, 223, Short.MAX_VALUE)))
         );
+
+        getContentPane().add(topicPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(156, 36, 708, 574));
 
         LeftPanel.setBackground(new java.awt.Color(0, 51, 204));
         LeftPanel.setPreferredSize(new java.awt.Dimension(150, 600));
@@ -296,21 +295,7 @@ public class Title_GUI extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(38, 14, 0, 0);
         LeftPanel.add(username, gridBagConstraints);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(LeftPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(topicPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 662, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(topicPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
-            .addComponent(LeftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        getContentPane().add(LeftPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 610));
 
         pack();
         setLocationRelativeTo(null);
@@ -359,19 +344,18 @@ public class Title_GUI extends javax.swing.JFrame {
 
     private void selectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectActionPerformed
         // TODO add your handling code here:
-        
         title_name = this.titlelist.getSelectedValue().toString();
-        fetchTitleID(title_name);
-        Title title_chosen = new Title(title_id,title_name,title_desc);
-        Comment_GUI comment_section = new Comment_GUI();
+        fetchTitleIDandDesc(title_name);
+        Title.title_chosen = new Title(title_id,title_name,title_desc);
+        Comment_GUI comment_section;
+        comment_section = new Comment_GUI();
         comment_section.setVisible(true);
-        
         this.dispose();
     }//GEN-LAST:event_selectActionPerformed
 
     private void titlelistValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_titlelistValueChanged
         // TODO add your handling code here:
-        
+       
     }//GEN-LAST:event_titlelistValueChanged
 
     private void homeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeActionPerformed
@@ -431,9 +415,9 @@ public class Title_GUI extends javax.swing.JFrame {
         }
     }
    
-   public void fetchTitleID(String title_name){
+   public void fetchTitleIDandDesc(String title_name){
         conn=DB_Controller.ConnectDB();
-        String Sql = "SELECT  id FROM subject_title WHERE subject_name = ? AND title_name = ? ";
+        String Sql = "SELECT  id,title_desc FROM subject_title WHERE subject_name = ? AND title_name = ? ";
         
         try{
             pst=conn.prepareStatement(Sql);
@@ -442,8 +426,8 @@ public class Title_GUI extends javax.swing.JFrame {
             pst.setString(2,title_name);
             rs = pst.executeQuery();
             if(rs.next()){
-                   title_id = Integer.parseInt(rs.getString("id"));
-                    
+                   title_id = rs.getInt("id");
+                   title_desc = rs.getString("title_desc"); 
                
             }
              
