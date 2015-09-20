@@ -11,7 +11,7 @@ import javax.swing.*;
  *
  * @author Asus
  */
-public class MySqlConnect {
+public class DB_Controller {
     Connection conn = null;
     public static Connection ConnectDB(){
         try{

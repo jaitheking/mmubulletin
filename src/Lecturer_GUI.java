@@ -9,14 +9,14 @@ import javax.swing.*;
  *
  * @author Imad
  */
-public class LecturerMenu extends javax.swing.JFrame {
+public class Lecturer_GUI extends javax.swing.JFrame {
         private Connection conn = null;
         private PreparedStatement pst = null;
         private ResultSet rs = null;
     /**
      * Creates new form LecturerMenu
      */
-    public LecturerMenu() {
+    public Lecturer_GUI() {
         initComponents();
     }
 
@@ -42,8 +42,6 @@ public class LecturerMenu extends javax.swing.JFrame {
         crStud = new javax.swing.JRadioButton();
 
         setTitle("Lecturer's Menu");
-        setMaximumSize(new java.awt.Dimension(260, 230));
-        setPreferredSize(new java.awt.Dimension(260, 230));
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Droid Sans", 0, 24)); // NOI18N
@@ -117,10 +115,11 @@ public class LecturerMenu extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(crpss, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
-                    .addComponent(crStud)
-                    .addComponent(crLect))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(crStud)
+                        .addComponent(crLect)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(crbutton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -132,7 +131,7 @@ public class LecturerMenu extends javax.swing.JFrame {
 
     private void crbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crbuttonActionPerformed
         // TODO add your handling code here:
-        conn=MySqlConnect.ConnectDB();
+        conn=DB_Controller.ConnectDB();
         String Sql = "insert into user" + "(User_id, User_pass, User_type)" + "values (?,?,?)"; 
         String crChecker = null;
         try{
@@ -172,20 +171,21 @@ public class LecturerMenu extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(LecturerMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Lecturer_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(LecturerMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Lecturer_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(LecturerMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Lecturer_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(LecturerMenu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Lecturer_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new LecturerMenu().setVisible(true);
+                new Lecturer_GUI().setVisible(true);
             }
         });
     }

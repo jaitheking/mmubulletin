@@ -11,15 +11,16 @@ import javax.swing.*;
  *
  * @author Asus
  */
-public class User extends javax.swing.JFrame {
+public class User_GUI extends javax.swing.JFrame {
     private String user_pass;
     private String user_type;
     private Connection conn = null;
     private PreparedStatement pst = null;
     private ResultSet rs = null;
+    private String checker = null;
    
-    String user_id;
-    public User() {
+    
+    public User_GUI() {
         initComponents();
         //user_pass = password;
         //user_type = role;
@@ -28,9 +29,6 @@ public class User extends javax.swing.JFrame {
     }
     
     
-    public void setuserid(String username){
-        user_id = username;
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -158,9 +156,9 @@ public class User extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         // TODO add your handling code here:
-        conn=MySqlConnect.ConnectDB();
+        conn=DB_Controller.ConnectDB();
         String Sql = "Select * from user where User_id=? and User_pass=? and User_type =?";
-        String checker = null;
+        
         try{
             pst=conn.prepareStatement(Sql);
             if(Lecturer.isSelected())
@@ -173,10 +171,10 @@ public class User extends javax.swing.JFrame {
             pst.setString(2,txtpassword.getText());
             pst.setString(3,checker);
             rs = pst.executeQuery();
-            if(rs.next() && (Student.isSelected() == true || Lecturer.isSelected()== true)){
+            if(rs.next()){
 
                 JOptionPane.showMessageDialog(null,"Login Successful\nWelcome "+txtusername.getText()+"!");
-                MMUBoard mmu = new MMUBoard();
+                Board_GUI mmu = new Board_GUI();
                 mmu.setVisible(true);
                 mmu.username.setText(txtusername.getText());
                 if( Lecturer.isSelected()){
@@ -198,7 +196,7 @@ public class User extends javax.swing.JFrame {
         }
         
         
-       setuserid(txtusername.getText());
+       
        
        
         
@@ -233,21 +231,23 @@ public class User extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(User.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(User_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(User.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(User_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(User.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(User_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(User.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(User_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new User().setVisible(true);
+                new User_GUI().setVisible(true);
             }
         });
     }

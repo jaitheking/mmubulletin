@@ -15,13 +15,13 @@ import javax.swing.event.*;
  *
  * @author Imad
  */
-public class Topic extends javax.swing.JFrame {
+public class Comment_GUI extends javax.swing.JFrame {
     private final static String newline ="\n";
     public String username;
     /**
      * Creates new form Topic
      */
-    public Topic() {
+    public Comment_GUI() {
         initComponents();
         
         CommentInput.getDocument().addDocumentListener(new DocumentListener() {
@@ -80,8 +80,6 @@ public class Topic extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Discussion Board");
-        setMaximumSize(new java.awt.Dimension(800, 600));
-        setPreferredSize(new java.awt.Dimension(800, 600));
         setResizable(false);
 
         LeftPanel.setBackground(new java.awt.Color(0, 51, 204));
@@ -195,7 +193,7 @@ public class Topic extends javax.swing.JFrame {
                         .addComponent(CommentInput)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(PostButton))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 638, Short.MAX_VALUE)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(RightPanelLayout.createSequentialGroup()
                         .addContainerGap()
@@ -297,7 +295,7 @@ public class Topic extends javax.swing.JFrame {
 
     private void homeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeActionPerformed
         // TODO add your handling code here:
-        MMUBoard mmu = new MMUBoard();
+        Board_GUI mmu = new Board_GUI();
         mmu.setVisible(true);
         mmu.username.setText(this.label_username.getText());
         this.setVisible(false);
@@ -305,7 +303,7 @@ public class Topic extends javax.swing.JFrame {
 
     private void subjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subjectActionPerformed
         // TODO add your handling code here:
-        Board board_subject = new Board();
+        Subject_GUI board_subject = new Subject_GUI();
         board_subject.setVisible(true);
         board_subject.username.setText(this.label_username.getText());
         this.setVisible(false);
@@ -314,18 +312,18 @@ public class Topic extends javax.swing.JFrame {
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null,"Logging out... \nGoodbye "+username);
-        User logout = new User();
+        User_GUI logout = new User_GUI();
         logout.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_logoutActionPerformed
 
     private void EditButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditButtonActionPerformed
         // TODO add your handling code here:
-        if(User.Lecturer.isSelected()){
+        if(User_GUI.Lecturer.isSelected()){
               DescriptionSection.setEditable(true);
         }
         
-        if(User.Student.isSelected()){
+        if(User_GUI.Student.isSelected()){
               EditButton.setEnabled(false);
         }
     }//GEN-LAST:event_EditButtonActionPerformed
@@ -347,20 +345,27 @@ public class Topic extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Topic.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Comment_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Topic.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Comment_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Topic.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Comment_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Topic.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Comment_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Topic().setVisible(true);
+                new Comment_GUI().setVisible(true);
             }
         });
     }

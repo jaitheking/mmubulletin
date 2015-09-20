@@ -1,9 +1,13 @@
 
+
 import java.awt.List;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-
+import java.sql.*;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -16,15 +20,18 @@ import javax.swing.JOptionPane;
  */
 
 
-public class Subject extends javax.swing.JFrame {
+public class Title_GUI extends javax.swing.JFrame {
     DefaultListModel listoftopics = new DefaultListModel();
     DefaultListModel desclist = new DefaultListModel();
+    DefaultListModel subjectlist = new DefaultListModel();
+    private  Connection conn = null;
+    private  PreparedStatement pst = null;
+    private ResultSet rs = null; 
     /**
      * Creates new form OOAD
      */
-    public Subject() {
+    public Title_GUI() {
         initComponents();
-        
         listoftopics.addElement("Class Announcement");
         listoftopics.addElement("Assignment Deadline");
         topicList.setModel(listoftopics);
@@ -131,7 +138,6 @@ public class Subject extends javax.swing.JFrame {
         addTopicFrame.setVisible(false);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(800, 600));
         setResizable(false);
 
         topicPanel.setPreferredSize(new java.awt.Dimension(650, 600));
@@ -288,8 +294,10 @@ public class Subject extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    
+    
     private void topicNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_topicNameActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_topicNameActionPerformed
 
     private void addTopicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addTopicActionPerformed
@@ -314,14 +322,14 @@ public class Subject extends javax.swing.JFrame {
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null,"Logging out... \nGoodbye "+username.getText());
-        User logout = new User();
+        User_GUI logout = new User_GUI();
         logout.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_logoutActionPerformed
 
     private void subjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subjectActionPerformed
         // TODO add your handling code here:
-        Board board_subject = new Board();
+        Subject_GUI board_subject = new Subject_GUI();
         board_subject.setVisible(true);
         board_subject.username.setText(this.username.getText());
         this.setVisible(false);
@@ -329,7 +337,7 @@ public class Subject extends javax.swing.JFrame {
 
     private void homeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeActionPerformed
         // TODO add your handling code here:
-        MMUBoard mmu = new MMUBoard();
+        Board_GUI mmu = new Board_GUI();
         mmu.setVisible(true);
         mmu.username.setText(this.username.getText());
         this.setVisible(false);
@@ -337,7 +345,7 @@ public class Subject extends javax.swing.JFrame {
 
     private void selectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectActionPerformed
         // TODO add your handling code here:
-        Topic newTopic = new Topic();
+        Comment_GUI newTopic = new Comment_GUI();
         newTopic.setVisible(true);
         String title = topicList.getSelectedValue().toString();
         newTopic.setTitle(title);
@@ -371,21 +379,27 @@ public class Subject extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Subject.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Title_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Subject.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Title_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Subject.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Title_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Subject.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Title_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Subject().setVisible(true);
+                new Title_GUI().setVisible(true);
             }
         });
     }

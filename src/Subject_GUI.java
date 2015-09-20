@@ -1,6 +1,7 @@
 
-import java.awt.Color;
-import javax.swing.JOptionPane;
+import java.awt.*;
+import java.sql.*;
+import javax.swing.*;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -12,15 +13,27 @@ import javax.swing.JOptionPane;
  *
  * @author azfaralsukor
  */
-public class Board extends javax.swing.JFrame {
-
+public class Subject_GUI extends javax.swing.JFrame {
+    DefaultListModel subjectlist_model = new DefaultListModel();
+    private  Connection conn = null;
+    private  PreparedStatement pst = null;
+    private ResultSet rs = null;
+    public String username_db;
     /**
-     * Creates new form Subject
+     * Creates new form Title_GUI
      */
-    public Board() {
+    public Subject_GUI() {
         initComponents();
+       
+        viewSubject();
+        
+        subjectlist.setModel(subjectlist_model);
+        
     }
+    
+    
 
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -32,9 +45,10 @@ public class Board extends javax.swing.JFrame {
 
         rightPanel = new javax.swing.JPanel();
         subjectList = new javax.swing.JLabel();
-        sub1 = new javax.swing.JLabel();
-        sub2 = new javax.swing.JLabel();
-        sub3 = new javax.swing.JLabel();
+        listScroll = new javax.swing.JScrollPane();
+        subjectlist = new javax.swing.JList();
+        select = new javax.swing.JButton();
+        test = new javax.swing.JLabel();
         leftPanel = new javax.swing.JPanel();
         logout = new javax.swing.JButton();
         home = new javax.swing.JButton();
@@ -50,73 +64,54 @@ public class Board extends javax.swing.JFrame {
         subjectList.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         subjectList.setText("Subject List");
 
-        sub1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        sub1.setText("TCP2201 Object Oriented Analysis Design");
-        sub1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                sub1MouseClicked(evt);
+        subjectlist.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                subjectlistValueChanged(evt);
             }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                sub1MouseExited(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                sub1MouseEntered(evt);
+        });
+        listScroll.setViewportView(subjectlist);
+
+        select.setText("Select");
+        select.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectActionPerformed(evt);
             }
         });
 
-        sub2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        sub2.setText("TSN2101 Operating Systems");
-        sub2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                sub2MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                sub2MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                sub2MouseExited(evt);
-            }
-        });
-
-        sub3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        sub3.setText("TSN2201 Computer Networks");
-        sub3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                sub3MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                sub3MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                sub3MouseExited(evt);
-            }
-        });
+        test.setText("jLabel1");
 
         javax.swing.GroupLayout rightPanelLayout = new javax.swing.GroupLayout(rightPanel);
         rightPanel.setLayout(rightPanelLayout);
         rightPanelLayout.setHorizontalGroup(
             rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rightPanelLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(subjectList)
-                    .addComponent(sub1)
-                    .addComponent(sub2)
-                    .addComponent(sub3))
-                .addContainerGap(263, Short.MAX_VALUE))
+                    .addGroup(rightPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(rightPanelLayout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addGroup(rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(select, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(listScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 583, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(subjectList)))
+                    .addGroup(rightPanelLayout.createSequentialGroup()
+                        .addGap(293, 293, 293)
+                        .addComponent(test)))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
         rightPanelLayout.setVerticalGroup(
             rightPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(rightPanelLayout.createSequentialGroup()
                 .addGap(39, 39, 39)
                 .addComponent(subjectList)
-                .addGap(18, 18, 18)
-                .addComponent(sub1)
-                .addGap(18, 18, 18)
-                .addComponent(sub2)
-                .addGap(18, 18, 18)
-                .addComponent(sub3)
-                .addContainerGap(412, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(listScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(select)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(test)
+                .addGap(7, 7, 7))
         );
 
         leftPanel.setBackground(new java.awt.Color(0, 51, 204));
@@ -165,7 +160,7 @@ public class Board extends javax.swing.JFrame {
                 .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(home, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 446, Short.MAX_VALUE)
                 .addComponent(logout)
                 .addContainerGap())
         );
@@ -181,17 +176,44 @@ public class Board extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(rightPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(leftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(rightPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    private void viewSubject(){
+        conn=DB_Controller.ConnectDB();
+        String Sql = "SELECT DISTINCT subject_name FROM subject,user_subject WHERE subject.subject_id = user_subject.subject_id AND subject.subject_id IN ( SELECT subject_id FROM user_subject WHERE user_id = ?) ";
+        
+        try{
+            pst=conn.prepareStatement(Sql);
+            
+            pst.setString(1,username_db);
+            rs = pst.executeQuery();
+            while(rs.next()){
+                    String subjectlist2 = rs.getString("subject_name");
+                    subjectlist_model.addElement(subjectlist2);
+                    
+               
+            }
+            if (subjectlist_model.getSize() < 1) {
+                subjectlist_model.addElement("No Subject has been registered yet.");
+                select.setEnabled(false);
+            } 
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    
     private void homeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeActionPerformed
         // TODO add your handling code here:
-        MMUBoard mmu = new MMUBoard();
+        Board_GUI mmu = new Board_GUI();
         mmu.setVisible(true);
         mmu.username.setText(this.username.getText());
         this.setVisible(false);
@@ -200,71 +222,24 @@ public class Board extends javax.swing.JFrame {
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null,"Logging out... \nGoodbye "+username.getText());
-        User logout = new User();
+        User_GUI logout = new User_GUI();
         logout.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_logoutActionPerformed
 
-    private void sub1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sub1MouseExited
+    private void subjectlistValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_subjectlistValueChanged
         // TODO add your handling code here:
-        sub1.setForeground(Color.BLACK);
-    }//GEN-LAST:event_sub1MouseExited
 
-    private void sub1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sub1MouseEntered
-        // TODO add your handling code here:
-        sub1.setForeground(Color.BLUE);
-    }//GEN-LAST:event_sub1MouseEntered
+    }//GEN-LAST:event_subjectlistValueChanged
 
-    private void sub1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sub1MouseClicked
+    private void selectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectActionPerformed
         // TODO add your handling code here:
-        Subject form = new Subject();
-        form.setVisible(true);
+        Title_GUI subject_board = new Title_GUI();
+        subject_board.setVisible(true);
+        subject_board.username.setText(this.username.getText());
+        subject_board.topictitle.setText(this.subjectlist.getSelectedValue().toString());
         this.setVisible(false);
-        form.username.setText(this.username.getText());
-        form.topictitle.setText(this.sub1.getText());
-        form.setTitle(this.sub1.getText());
-        
-    }//GEN-LAST:event_sub1MouseClicked
-
-    private void sub2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sub2MouseClicked
-        // TODO add your handling code here:
-        Subject form = new Subject();
-        form.setVisible(true);
-        this.setVisible(false);
-        form.username.setText(this.username.getText());
-        form.topictitle.setText(this.sub2.getText());
-        form.setTitle(this.sub1.getText());
-    }//GEN-LAST:event_sub2MouseClicked
-
-    private void sub2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sub2MouseEntered
-        // TODO add your handling code here:
-        sub2.setForeground(Color.BLUE);
-    }//GEN-LAST:event_sub2MouseEntered
-
-    private void sub2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sub2MouseExited
-        // TODO add your handling code here:
-        sub2.setForeground(Color.BLACK);
-    }//GEN-LAST:event_sub2MouseExited
-
-    private void sub3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sub3MouseEntered
-        // TODO add your handling code here:
-        sub3.setForeground(Color.BLUE);
-    }//GEN-LAST:event_sub3MouseEntered
-
-    private void sub3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sub3MouseExited
-        // TODO add your handling code here:
-        sub3.setForeground(Color.BLACK);
-    }//GEN-LAST:event_sub3MouseExited
-
-    private void sub3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sub3MouseClicked
-        // TODO add your handling code here:
-        Subject form = new Subject();
-        form.setVisible(true);
-        this.setVisible(false);
-        form.username.setText(this.username.getText());
-        form.topictitle.setText(this.sub3.getText());
-        form.setTitle(this.sub1.getText());
-    }//GEN-LAST:event_sub3MouseClicked
+    }//GEN-LAST:event_selectActionPerformed
 
     /**
      * @param args the command line arguments
@@ -283,21 +258,27 @@ public class Board extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Board.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Subject_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Board.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Subject_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Board.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Subject_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Board.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Subject_GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Board().setVisible(true);
+                new Subject_GUI().setVisible(true);
             }
         });
     }
@@ -305,12 +286,13 @@ public class Board extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton home;
     private javax.swing.JPanel leftPanel;
+    private javax.swing.JScrollPane listScroll;
     private javax.swing.JButton logout;
     private javax.swing.JPanel rightPanel;
-    private javax.swing.JLabel sub1;
-    private javax.swing.JLabel sub2;
-    private javax.swing.JLabel sub3;
+    private javax.swing.JButton select;
     private javax.swing.JLabel subjectList;
+    private javax.swing.JList subjectlist;
+    private javax.swing.JLabel test;
     public javax.swing.JLabel username;
     // End of variables declaration//GEN-END:variables
 }

@@ -3,25 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import java.sql.*;
 import javax.swing.*;
-import javax.swing.event.*;
 /**
  *
  * @author azfaralsukor
  */
-public class MMUBoard extends javax.swing.JFrame {
-    private  Connection conn = null;
-    private  PreparedStatement pst = null;
-    private ResultSet rs = null; 
+public class Board_GUI extends javax.swing.JFrame {
+    
      
     
     /**
      * Creates new form MMU_Bulletin
      */
-    public MMUBoard() {
+    public Board_GUI() {
         initComponents();
-        conn = MySqlConnect.ConnectDB();
+        
         
         
     }
@@ -38,9 +34,8 @@ public class MMUBoard extends javax.swing.JFrame {
         LeftPanel = new javax.swing.JPanel();
         logout = new javax.swing.JButton();
         subject = new javax.swing.JButton();
-        username = new javax.swing.JLabel();
         AddButton = new javax.swing.JButton();
-        label_username = new javax.swing.JLabel();
+        username = new javax.swing.JLabel();
         rightPanel = new javax.swing.JPanel();
         bbcm = new javax.swing.JLabel();
         homepage = new javax.swing.JLabel();
@@ -67,9 +62,6 @@ public class MMUBoard extends javax.swing.JFrame {
             }
         });
 
-        username.setFont(new java.awt.Font("Droid Sans", 0, 24)); // NOI18N
-        username.setForeground(new java.awt.Color(255, 250, 250));
-
         AddButton.setText("Add new user");
         AddButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,9 +69,9 @@ public class MMUBoard extends javax.swing.JFrame {
             }
         });
 
-        label_username.setFont(new java.awt.Font("Droid Sans", 0, 24)); // NOI18N
-        label_username.setForeground(new java.awt.Color(255, 250, 250));
-        label_username.setText("<username>");
+        username.setFont(new java.awt.Font("Droid Sans", 0, 24)); // NOI18N
+        username.setForeground(new java.awt.Color(255, 250, 250));
+        username.setText("<username>");
 
         javax.swing.GroupLayout LeftPanelLayout = new javax.swing.GroupLayout(LeftPanel);
         LeftPanel.setLayout(LeftPanelLayout);
@@ -88,26 +80,25 @@ public class MMUBoard extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LeftPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(label_username, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(LeftPanelLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(AddButton)
-                            .addComponent(subject)))
+                    .addComponent(username, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, LeftPanelLayout.createSequentialGroup()
                         .addComponent(logout, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(LeftPanelLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(AddButton)
+                            .addGroup(LeftPanelLayout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(subject)))
+                        .addGap(27, 27, 27)))
+                .addGap(78, 78, 78))
         );
         LeftPanelLayout.setVerticalGroup(
             LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, LeftPanelLayout.createSequentialGroup()
                 .addGap(32, 32, 32)
-                .addGroup(LeftPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(username, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(label_username, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(username, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(66, 66, 66)
                 .addComponent(subject, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -174,72 +165,37 @@ public class MMUBoard extends javax.swing.JFrame {
     private void logoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null,"Logging out... \nGoodbye "+username.getText());
-        User logout = new User();
+        User_GUI logout = new User_GUI();
         logout.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_logoutActionPerformed
 
     private void subjectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_subjectActionPerformed
         // TODO add your handling code here:
-        Board board_subject = new Board();
+        Subject_GUI board_subject = new Subject_GUI();
         board_subject.setVisible(true);
-        board_subject.username.setText(this.label_username.getText());
+        board_subject.username.setText(this.username.getText());
+        board_subject.username_db = this.username.getText();
+        
         this.setVisible(false);
     }//GEN-LAST:event_subjectActionPerformed
 
     private void AddButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddButtonActionPerformed
         // TODO add your handling code here:
-        LecturerMenu Add_member = new LecturerMenu();
+        Lecturer_GUI Add_member = new Lecturer_GUI();
         Add_member.setVisible(true);
         
         
             
     }//GEN-LAST:event_AddButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MMUBoard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MMUBoard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MMUBoard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MMUBoard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                new MMUBoard().setVisible(true);
-
-            }
-        });
-    }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton AddButton;
     private javax.swing.JPanel LeftPanel;
     private javax.swing.JLabel bbcm;
     private javax.swing.JLabel homepage;
-    public javax.swing.JLabel label_username;
     private javax.swing.JButton logout;
     private javax.swing.JPanel rightPanel;
     private javax.swing.JButton subject;
