@@ -24,7 +24,8 @@ public class Title_GUI extends javax.swing.JFrame {
     private  PreparedStatement pst = null;
     private ResultSet rs = null;
     private String user_name;
-    private String subject_name_title;
+    private String subject_name1_title;
+    
     private String  title_name;
     private String title_desc;
     private int title_id;
@@ -35,7 +36,8 @@ public class Title_GUI extends javax.swing.JFrame {
         initComponents();
         user_name = String.valueOf(User.new_user.getUser_id());
         username.setText(user_name);
-        subject_name_title = Subject.discuss_subject.getSubjTitle();
+        subject_name1_title = Subject.discuss_subject.getSubjTitle();
+        topictitle.setText(subject_name1_title);
         viewTitle();
         titlelist.setModel(titlelist_model);
         
@@ -67,6 +69,7 @@ public class Title_GUI extends javax.swing.JFrame {
         listScroll = new javax.swing.JScrollPane();
         titlelist = new javax.swing.JList();
         jList1 = new javax.swing.JList();
+        Refresh = new javax.swing.JButton();
         LeftPanel = new javax.swing.JPanel();
         logout = new javax.swing.JButton();
         subject = new javax.swing.JButton();
@@ -172,23 +175,33 @@ public class Title_GUI extends javax.swing.JFrame {
         });
         listScroll.setViewportView(titlelist);
 
+        Refresh.setText("Refresh");
+        Refresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                RefreshActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout topicPanelLayout = new javax.swing.GroupLayout(topicPanel);
         topicPanel.setLayout(topicPanelLayout);
         topicPanelLayout.setHorizontalGroup(
             topicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(topicPanelLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addComponent(topictitle)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(topicPanelLayout.createSequentialGroup()
-                .addContainerGap(39, Short.MAX_VALUE)
-                .addGroup(topicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(topicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(topicPanelLayout.createSequentialGroup()
-                        .addComponent(listTopics)
-                        .addGap(137, 137, 137)
-                        .addComponent(addTopic))
-                    .addComponent(select, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
-                    .addComponent(listScroll))
+                        .addGap(32, 32, 32)
+                        .addComponent(topictitle)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Refresh))
+                    .addGroup(topicPanelLayout.createSequentialGroup()
+                        .addContainerGap(39, Short.MAX_VALUE)
+                        .addGroup(topicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(topicPanelLayout.createSequentialGroup()
+                                .addComponent(listTopics)
+                                .addGap(137, 137, 137)
+                                .addComponent(addTopic))
+                            .addComponent(select, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
+                            .addComponent(listScroll))))
                 .addContainerGap(40, Short.MAX_VALUE))
             .addGroup(topicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(topicPanelLayout.createSequentialGroup()
@@ -199,14 +212,20 @@ public class Title_GUI extends javax.swing.JFrame {
         topicPanelLayout.setVerticalGroup(
             topicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topicPanelLayout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(topictitle)
-                .addGap(18, 18, 18)
+                .addGroup(topicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(topicPanelLayout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(topictitle)
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, topicPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(Refresh)
+                        .addGap(5, 5, 5)))
                 .addGroup(topicPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(listTopics)
                     .addComponent(addTopic))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(listScroll)
+                .addComponent(listScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 439, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(select)
                 .addContainerGap())
@@ -230,7 +249,6 @@ public class Title_GUI extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = 2;
         gridBagConstraints.ipadx = 72;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(391, 12, 12, 0);
@@ -245,10 +263,10 @@ public class Title_GUI extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 2;
-        gridBagConstraints.ipady = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 79, 0, 0);
+        gridBagConstraints.ipadx = 10;
+        gridBagConstraints.ipady = 14;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(14, 46, 0, 4);
         LeftPanel.add(subject, gridBagConstraints);
 
         home.setText("Home");
@@ -264,7 +282,7 @@ public class Title_GUI extends javax.swing.JFrame {
         gridBagConstraints.ipadx = 19;
         gridBagConstraints.ipady = 13;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 79, 0, 0);
+        gridBagConstraints.insets = new java.awt.Insets(18, 53, 0, 0);
         LeftPanel.add(home, gridBagConstraints);
 
         username.setFont(new java.awt.Font("Droid Sans", 0, 24)); // NOI18N
@@ -273,7 +291,6 @@ public class Title_GUI extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 3;
         gridBagConstraints.ipady = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(38, 14, 0, 0);
@@ -291,7 +308,7 @@ public class Title_GUI extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(topicPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(topicPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
             .addComponent(LeftPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -319,8 +336,9 @@ public class Title_GUI extends javax.swing.JFrame {
         
         title_name = topicName.getText();
         title_desc = topicDescription.getText();
-        addTitle(subject_name_title,title_name,title_desc);
+        addTitle(title_name,title_desc);
         addTopicFrame.setVisible(false);
+        
         
     }//GEN-LAST:event_submitActionPerformed
 
@@ -341,11 +359,13 @@ public class Title_GUI extends javax.swing.JFrame {
 
     private void selectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectActionPerformed
         // TODO add your handling code here:
-        Comment_GUI comment_section = new Comment_GUI();
-        comment_section.setVisible(true);
+        
         title_name = this.titlelist.getSelectedValue().toString();
         fetchTitleID(title_name);
         Title title_chosen = new Title(title_id,title_name,title_desc);
+        Comment_GUI comment_section = new Comment_GUI();
+        comment_section.setVisible(true);
+        
         this.dispose();
     }//GEN-LAST:event_selectActionPerformed
 
@@ -360,23 +380,26 @@ public class Title_GUI extends javax.swing.JFrame {
         mmu.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_homeActionPerformed
+
+    private void RefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RefreshActionPerformed
+        // TODO add your handling code here:
+        titlelist_model.removeAllElements();
+        viewTitle();
+    }//GEN-LAST:event_RefreshActionPerformed
     
-   private void addTitle(String subject_name,String title_name, String title_desc){
+   private void addTitle(String title_name, String title_desc){
        conn=DB_Controller.ConnectDB();
         String Sql = "INSERT INTO subject_title(subject_name, title_name, title_desc) VALUES (?,?,?)";
         
         try{
             pst=conn.prepareStatement(Sql);
             
-            pst.setString(1,subject_name);
+            pst.setString(1,subject_name1_title);
             pst.setString(2,title_name);
             pst.setString(3,title_desc);
-            rs = pst.executeQuery();
-            if(rs.next()){
-                    JOptionPane.showMessageDialog(null,"Topic added successful.");
-            }
-            else{JOptionPane.showMessageDialog(null,"Unsuccessful","Please Try Again",JOptionPane.ERROR_MESSAGE);}
-        }
+            pst.executeUpdate();
+            
+        }    
         catch(Exception e){
             JOptionPane.showMessageDialog(null, e);
         }
@@ -391,7 +414,7 @@ public class Title_GUI extends javax.swing.JFrame {
         try{
             pst=conn.prepareStatement(Sql);
             
-            pst.setString(1,subject_name_title);
+            pst.setString(1,subject_name1_title);
             rs = pst.executeQuery();
             while(rs.next()){
                     String subjectlist2 = rs.getString("title_name");
@@ -415,7 +438,7 @@ public class Title_GUI extends javax.swing.JFrame {
         try{
             pst=conn.prepareStatement(Sql);
             
-            pst.setString(1,subject_name_title);
+            pst.setString(1,subject_name1_title);
             pst.setString(2,title_name);
             rs = pst.executeQuery();
             if(rs.next()){
@@ -431,6 +454,7 @@ public class Title_GUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel LeftPanel;
+    private javax.swing.JButton Refresh;
     private javax.swing.JLabel addNewTopic;
     private javax.swing.JButton addTopic;
     private javax.swing.JFrame addTopicFrame;

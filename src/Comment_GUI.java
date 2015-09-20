@@ -32,9 +32,9 @@ public class Comment_GUI extends javax.swing.JFrame {
         user_name = String.valueOf(User.new_user.getUser_id());
         username.setText(user_name);
         subject_name = Subject.discuss_subject.getSubjTitle();
-        title_id = Title.title_chosen.gettitle_id();
-        title_name = Title.title_chosen.gettitle_name();
-        title_desc = Title.title_chosen.gettitle_desc();
+        title_id = Title.title_chosen.getTitle_id();
+        title_name = Title.title_chosen.getTitle_name();
+        title_desc = Title.title_chosen.getTitle_desc();
         DescriptionSection.setText(title_desc);
         CommentInput.getDocument().addDocumentListener(new DocumentListener() {
                 public void changedUpdate(DocumentEvent e) {

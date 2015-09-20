@@ -19,16 +19,16 @@ public class Subject_GUI extends javax.swing.JFrame {
     private  PreparedStatement pst = null;
     private ResultSet rs = null;
     private String user_name;
-    /**
-     * Creates new form Title_GUI
-     */
+    private String subject_title;
+    
     public Subject_GUI() {
         initComponents();
        
-        viewSubject();
+        
         user_name = String.valueOf(User.new_user.getUser_id());
         username.setText(user_name);
-        subjectlist.setModel(subjectlist_model);
+        viewSubject();
+        
         
     }
     
@@ -97,7 +97,7 @@ public class Subject_GUI extends javax.swing.JFrame {
                                     .addComponent(listScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 583, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(subjectList)))
                     .addGroup(rightPanelLayout.createSequentialGroup()
-                        .addGap(293, 293, 293)
+                        .addGap(209, 209, 209)
                         .addComponent(test)))
                 .addContainerGap(37, Short.MAX_VALUE))
         );
@@ -110,9 +110,8 @@ public class Subject_GUI extends javax.swing.JFrame {
                 .addComponent(listScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(select)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(test)
-                .addGap(7, 7, 7))
+                .addGap(19, 19, 19)
+                .addComponent(test))
         );
 
         leftPanel.setBackground(new java.awt.Color(0, 51, 204));
@@ -190,7 +189,7 @@ public class Subject_GUI extends javax.swing.JFrame {
     
     private void viewSubject(){
         conn=DB_Controller.ConnectDB();
-        String Sql = "SELECT DISTINCT subject_name FROM subject,user_subject WHERE subject.subject_id = user_subject.subject_id AND subject.subject_id IN ( SELECT subject_id FROM user_subject WHERE user_id = ?) ";
+        String Sql = "SELECT DISTINCT subject_name FROM user_subject WHERE user_id = ? ";
         
         try{
             pst=conn.prepareStatement(Sql);
@@ -210,6 +209,7 @@ public class Subject_GUI extends javax.swing.JFrame {
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e);
         }
+        subjectlist.setModel(subjectlist_model);
     }
     
     private void homeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_homeActionPerformed
@@ -229,15 +229,16 @@ public class Subject_GUI extends javax.swing.JFrame {
 
     private void subjectlistValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_subjectlistValueChanged
         // TODO add your handling code here:
-
+            test.setText(this.subjectlist.getSelectedValue().toString());
     }//GEN-LAST:event_subjectlistValueChanged
 
     private void selectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectActionPerformed
-        // TODO add your handling code here:
-        Title_GUI title_board = new Title_GUI();
+        subject_title = this.subjectlist.getSelectedValue().toString();
+        Subject.discuss_subject = new Subject(subject_title);  
+        Title_GUI title_board;
+        title_board = new Title_GUI();
         title_board.setVisible(true);
-        Subject discuss_subject = new Subject(this.subjectlist.getSelectedValue().toString());  
-        this.setVisible(false);
+        this.dispose();
     }//GEN-LAST:event_selectActionPerformed
 
     

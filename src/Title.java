@@ -15,32 +15,32 @@ public class Title {
     public static Title title_chosen;
     
     public Title(int id ,String name,String desc){
-        this.settitle_id(id);
-        this.settitle_name(name);
-        this.settitle_desc(desc);
+        this.setTitle_id(id);
+        this.setTitle_name(name);
+        this.setTitle_desc(desc);
     }
     
-    public void settitle_name(String name){
-        title_name = name;
+    public void setTitle_name(String name){
+        this.title_name = name;
     }
     
-    public String gettitle_name(){
+    public String getTitle_name(){
         return title_name;
     }
     
-    public void settitle_desc(String desc){
-        title_desc = desc;
+    public void setTitle_desc(String desc){
+        this.title_desc = desc;
     }
     
-    public String gettitle_desc(){
+    public String getTitle_desc(){
         return title_desc;
     }
     
-    public void settitle_id(int id){
-        title_id = id;
+    public void setTitle_id(int id){
+        this.title_id = id;
     }
     
-    public int gettitle_id(){
+    public int getTitle_id(){
         return title_id;
     }
     

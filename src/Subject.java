@@ -12,12 +12,12 @@ public class Subject {
     private String subject_title;
     public static Subject discuss_subject;
     
-    public Subject(String title){
-        this.setSubjTitle(title);
+    public Subject(String subject_title){
+        this.setSubjTitle(subject_title);
     }
     
-    public void setSubjTitle(String title){
-        this.subject_title = title;
+    public void setSubjTitle(String subject_title){
+        this.subject_title = subject_title;
     }
     
     public String getSubjTitle(){
