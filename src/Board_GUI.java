@@ -110,6 +110,11 @@ public class Board_GUI extends javax.swing.JFrame {
         LeftPanel.add(username, gridBagConstraints);
 
         report.setText("Analysis Report");
+        report.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reportActionPerformed(evt);
+            }
+        });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 3;
@@ -194,6 +199,12 @@ public class Board_GUI extends javax.swing.JFrame {
         
             
     }//GEN-LAST:event_AddButtonActionPerformed
+
+    private void reportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportActionPerformed
+        // TODO add your handling code here:
+        AR_GUI ar = new AR_GUI();
+        ar.setVisible(true);
+    }//GEN-LAST:event_reportActionPerformed
 
    
 
